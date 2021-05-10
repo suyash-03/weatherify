@@ -34,24 +34,19 @@ import 'dart:convert';
     }
     _locationData = await location.getLocation();
     print(_locationData);
-
-    await returnLatitude();
-    await returnLongitude();
-
-
   }
 
   Future<double> returnLatitude() async
   {
     newLat = _locationData.latitude;
     print(newLat);
-    return newLat;
+    return newLat.toDouble();
   }
   Future<double> returnLongitude() async
   {
     newLong = _locationData.longitude;
     print(newLong);
-    return newLong;
+    return newLong.toDouble();
   }
 
 

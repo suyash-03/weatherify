@@ -23,6 +23,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Location location = new Location();
 
   LocationData _locationData;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getPermisson();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,20 +44,20 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 SizedBox(height: (MediaQuery.of(context).size.height/4),),
                 Text('Hi',style: TextStyle(
-                  fontSize: 50.0,
+                  fontSize: 80.0,
                   fontFamily: 'Fjalla',
                 ),),
                 Text('There !',style: TextStyle(
                     fontWeight: FontWeight.bold,
                   color: Colors.greenAccent[400],
-                  fontSize: 70.0,
+                  fontSize: 90.0,
                   fontFamily: 'Fjalla',
                 ),),
                 FutureBuilder(
                   future: returnLatitude(),
                   builder: (BuildContext context, AsyncSnapshot snapshot)
                 {
-                  print(snapshot.data);
+                  print(snapshot.hasData);
                   if(snapshot.data == null){
                    return Text('Loading');
                   }
@@ -64,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     future: returnLongitude(),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       print(snapshot.data);
+
                       if (snapshot.data == null) {
                         return Text('Loading');
                       }
@@ -92,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(width: MediaQuery.of(context).size.width,),
                   SizedBox(height: MediaQuery.of(context).size.height/3,),
                   AnimatedHoverButton(
-                    title: "See Weather",
+                    title: "See Weather at your Location",
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => DisplayWeather()));
@@ -108,12 +115,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getPermisson();
 
-  }
 }
 
