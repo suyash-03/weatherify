@@ -27,7 +27,7 @@ class _DisplayWeatherState extends State<DisplayWeather> {
   }
   Future<double> getTemp() async{
     Weather w = await wf.currentWeatherByLocation(newLat, newLong);
-    temperature = w.temperature.celsius;
+    temperature = double.parse((w.temperature.celsius).toStringAsFixed(2));
     tempMin = double.parse((w.tempMin.celsius).toStringAsFixed(2));
     tempMax = double.parse((w.tempMax.celsius).toStringAsFixed(2));
     return w.temperature.celsius;
@@ -41,7 +41,7 @@ class _DisplayWeatherState extends State<DisplayWeather> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.blueAccent,
       ),
       body: FutureBuilder(
         future: getTemp(),
@@ -51,7 +51,7 @@ class _DisplayWeatherState extends State<DisplayWeather> {
           if(snapshot.data == null){
             return Container(
               child: Container(
-                color: Colors.blue[100],
+                color: Colors.blue,
                 child: Center(
                   child: SpinKitSquareCircle(
                     color: Colors.white,
@@ -66,8 +66,18 @@ class _DisplayWeatherState extends State<DisplayWeather> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Container(child: SizedBox(width: MediaQuery.of(context).size.width, height: 50,)),
-                  Text("Current Temperature: $temperature" ),
+                  Container(child: SizedBox(width: MediaQuery.of(context).size.width, height: 0,)),
+                  Container(
+                    color: Colors.blueAccent,
+                    height: MediaQuery.of(context).size.height/2,
+                      child: Center(
+                          child: Text("$temperature ° C",style: TextStyle(
+                            fontSize: 50,
+                            fontFamily: "Fjalla",
+                            fontWeight: FontWeight.bold
+                          ), )
+                      )
+                  ),
                   SizedBox(height:  20),
                   Text("Minimum Temperature: $tempMin" ),
                   SizedBox(height:  20),

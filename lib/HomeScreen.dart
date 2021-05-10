@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Expanded(
             child: Container(
-              color: Colors.blueAccent[100],
+              color: Colors.blueAccent,
 
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
