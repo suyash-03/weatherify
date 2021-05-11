@@ -120,12 +120,14 @@ class _DisplayWeatherState extends State<DisplayWeather> {
                   Text("Maximum Temperature: $tempMax",style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
+                    fontFamily: "Fjalla"
 
                   ), ),
                   SizedBox(height:  20),
                   Text("Minimum Temperature: $tempMin" ,style: TextStyle(
-                    fontSize: 15,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
+                      fontFamily: "Fjalla"
 
                   ),),
                   
