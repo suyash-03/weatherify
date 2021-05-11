@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'user_location.dart';
 import 'package:flutter_button/flutter_button.dart';
-import 'package:location/location.dart';
+import 'package:weatherify/locationDetails.dart';
 import 'weather_screen.dart';
-import 'locationDetails.dart';
+import 'manual_location.dart';
+import 'weather_manual.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -13,32 +13,20 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
   class _HomeScreenState extends State<HomeScreen> {
-  double latD,longD;
+  String  cityName ="";
+  LocationDetails _locationDetails =LocationDetails();
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    waitDetails();
-  }
-
-  Future waitDetails() async {
-    LocationDetails _locationDetails = LocationDetails();
-    LocationData _locationData;
     _locationDetails.getPermisson();
-    _locationData = await _locationDetails.getLocation();
-    latD=_locationData.latitude.toDouble();
-    longD=_locationData.longitude.toDouble();
-
-
-    print("Future from Home Screen");
-    print(_locationData.latitude);
-    print(_locationData.longitude);
   }
-
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
 
       body: Column(
@@ -49,7 +37,7 @@ class HomeScreen extends StatefulWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                SizedBox(height: (MediaQuery.of(context).size.height/4),),
+                SizedBox(height: (MediaQuery.of(context).size.height/6),),
                 Text('Hi',style: TextStyle(
                   fontSize: 80.0,
                   fontFamily: 'Fjalla',
@@ -58,30 +46,11 @@ class HomeScreen extends StatefulWidget {
                     fontWeight: FontWeight.bold,
                   color: Colors.greenAccent[400],
                   fontSize: 90.0,
-                  fontFamily: 'Fjalla',
-                ),
-                ),
-                //Future Builder Goes Here
-                FutureBuilder(
-                  future: waitDetails(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot){
-                      if(snapshot.data==null){
-                        print(snapshot.hasData);
-
-                        return Text("    The App Automatically \n"
-                            "    determines your Location",style: TextStyle(
-                          fontSize: 15,
-                          fontFamily: "Montserrat"
-                        ),);
-                      }
-                      else{
-                        return Text("Latitude :$latD \n"
-                            "Longitude: $longD ");
-                      }
-                    }
-                )
-
-
+                  fontFamily: 'Fjalla',),),
+                Text(" Weatherify: \n"
+                      " The Weather App for dummies",style: TextStyle(
+                           fontSize: 15,
+                       fontFamily: "Montserrat",))
               ],
             ),
           ),
@@ -95,14 +64,42 @@ class HomeScreen extends StatefulWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(width: MediaQuery.of(context).size.width,),
-                  SizedBox(height: MediaQuery.of(context).size.height/3,),
-                  AnimatedHoverButton(
-                    title: "See Weather at your Location",
+                  SizedBox(height: MediaQuery.of(context).size.height/25,),
+                  Container(
+                    width: MediaQuery.of(context).size.width/1.2,
+                    child: TextField(decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          ),
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        hintText: 'Enter City Name',
+                      hintStyle: TextStyle(
+                        color: Colors.white
+                      ),
+
+                    ),
+                    onChanged: (String str){
+                      setState(() {
+                        cityName = str;
+                      });
+                    },),
+                  ),
+                  SizedBox(height: 50,),
+
+                  AnimatedHoverButton(title: "Search by City",
                     onTap: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => DisplayWeather()));
-                    },
-                    titleSize: 20,
+                          MaterialPageRoute(builder: (context) => WeatherManual(cityName:cityName)));
+                    }, titleSize: 20,),
+                  SizedBox(height: 20,),
+                  AnimatedHoverButton(
+                    title: "Get Location Automatically", onTap: ()
+                  {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) =>  DisplayWeather()));
+                  }, titleSize: 20,
                   ),
                 ],
               ),

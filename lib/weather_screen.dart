@@ -23,13 +23,6 @@ class _DisplayWeatherState extends State<DisplayWeather> {
   String weatherDesc = "";
 
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    waitDetails();
-  }
-
   Future<Weather> waitDetails() async{
 
     LocationDetails _locationDetails = LocationDetails();
@@ -68,7 +61,7 @@ class _DisplayWeatherState extends State<DisplayWeather> {
       body: FutureBuilder(
         future: waitDetails(),
           builder: (BuildContext context, AsyncSnapshot<Weather> snapshot){
-          print( "This is invoked from Future builder");
+          print( "This is invoked from Future builder Automatic");
           print(snapshot.hasData);
           if(snapshot.data == null){
             return Container(
@@ -130,6 +123,8 @@ class _DisplayWeatherState extends State<DisplayWeather> {
                       fontFamily: "Fjalla"
 
                   ),),
+                  SizedBox(height: 50,),
+                  Text("$latD" + "," + "$longD")
                   
                 ],
               ),
