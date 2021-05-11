@@ -68,7 +68,11 @@ class HomeScreen extends StatefulWidget {
                       if(snapshot.data==null){
                         print(snapshot.hasData);
 
-                        return Text("Loading Location");
+                        return Text("    The App Automatically \n"
+                            "    determines your Location",style: TextStyle(
+                          fontSize: 15,
+                          fontFamily: "Montserrat"
+                        ),);
                       }
                       else{
                         return Text("Latitude :$latD \n"

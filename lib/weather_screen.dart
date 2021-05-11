@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:async';
 import 'package:weather/weather.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -19,6 +20,7 @@ class _DisplayWeatherState extends State<DisplayWeather> {
   String temperature ="";
   String tempMax = "";
   String tempMin ="";
+  String weatherDesc = "";
 
 
   @override
@@ -42,9 +44,11 @@ class _DisplayWeatherState extends State<DisplayWeather> {
     temperature = double.parse(w.temperature.celsius.toString()).toStringAsFixed(2);
     tempMax= double.parse(w.tempMax.celsius.toString()).toStringAsFixed(2);
     tempMin = double.parse(w.tempMin.celsius.toString()).toStringAsFixed(2);
+    weatherDesc = w.weatherDescription.toString();
 
     print("Future from Weather Screen");
     print(temperature);
+    print(w.weatherDescription);
 
     print("Future from Weather Screen");
     return w;
@@ -90,14 +94,28 @@ class _DisplayWeatherState extends State<DisplayWeather> {
                         color: Colors.blueAccent,
                       ),
                     height: MediaQuery.of(context).size.height/2,
-                      child: Center(
-                          child: Text(temperature + "C",style: TextStyle(
-                            fontSize: 50,
-                            fontFamily: "Fjalla",
-                            fontWeight: FontWeight.bold
-                          ), )
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Center(
+                              child: Text(temperature + " °C",style: TextStyle(
+                                fontSize: 50,
+                                fontFamily: "Fjalla",
+                                fontWeight: FontWeight.bold
+                              ), )
+                          ),
+                          Center(
+                            child: Text(weatherDesc,style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontFamily: "Montserrat",
+                              fontWeight: FontWeight.w200
+                            ),),
+                          ),
+                        ],
                       )
                   ),
+
                   SizedBox(height:  20),
                   Text("Maximum Temperature: $tempMax",style: TextStyle(
                     fontSize: 20,
