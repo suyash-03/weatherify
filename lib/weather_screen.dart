@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:weather/weather.dart';
-import 'package:weatherify/HomeScreen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'user_location.dart';
+import 'locationDetails.dart';
+import 'package:location/location.dart';
 
 class DisplayWeather extends StatefulWidget {
   const DisplayWeather({Key key}) : super(key: key);
-
   @override
   _DisplayWeatherState createState() => _DisplayWeatherState();
 }
@@ -17,25 +14,41 @@ class DisplayWeather extends StatefulWidget {
 
 class _DisplayWeatherState extends State<DisplayWeather> {
 
-  WeatherFactory wf = new WeatherFactory("af9b20f8cd3f81c020611328b534f316");
-  double temperature,tempMin,tempMax;
-
-
+  WeatherFactory wf = new WeatherFactory("9dc55dc64829123d2a0c5ee4cf0b8ba2");
+  double latD,longD;
+  String temperature ="";
+  String tempMax = "";
+  String tempMin ="";
 
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getTemp();
+    waitDetails();
   }
 
-  Future<double> getTemp() async{
-    Weather w = await wf.currentWeatherByLocation(newLat, newLong);
-    temperature = double.parse((w.temperature.celsius).toStringAsFixed(2));
-    tempMin = double.parse((w.tempMin.celsius).toStringAsFixed(2));
-    tempMax = double.parse((w.tempMax.celsius).toStringAsFixed(2));
-    return w.temperature.celsius;
+  Future<Weather> waitDetails() async{
+
+    LocationDetails _locationDetails = LocationDetails();
+    LocationData _locationData;
+    _locationDetails.getPermisson();
+    _locationData = await _locationDetails.getLocation();
+    latD=_locationData.latitude.toDouble();
+    longD=_locationData.longitude.toDouble();
+
+    WeatherFactory wf = new WeatherFactory("9dc55dc64829123d2a0c5ee4cf0b8ba2");
+    Weather w = await wf.currentWeatherByLocation(latD, longD);
+    temperature = double.parse(w.temperature.celsius.toString()).toStringAsFixed(2);
+    tempMax= double.parse(w.tempMax.celsius.toString()).toStringAsFixed(2);
+    tempMin = double.parse(w.tempMin.celsius.toString()).toStringAsFixed(2);
+
+    print("Future from Weather Screen");
+    print(temperature);
+
+    print("Future from Weather Screen");
+    return w;
+
   }
 
   
@@ -49,8 +62,8 @@ class _DisplayWeatherState extends State<DisplayWeather> {
         backgroundColor: Colors.blueAccent,
       ),
       body: FutureBuilder(
-        future: getTemp(),
-          builder: (BuildContext context, AsyncSnapshot snapshot){
+        future: waitDetails(),
+          builder: (BuildContext context, AsyncSnapshot<Weather> snapshot){
           print( "This is invoked from Future builder");
           print(snapshot.hasData);
           if(snapshot.data == null){
@@ -78,7 +91,7 @@ class _DisplayWeatherState extends State<DisplayWeather> {
                       ),
                     height: MediaQuery.of(context).size.height/2,
                       child: Center(
-                          child: Text("$temperature ° C",style: TextStyle(
+                          child: Text(temperature + "C",style: TextStyle(
                             fontSize: 50,
                             fontFamily: "Fjalla",
                             fontWeight: FontWeight.bold
