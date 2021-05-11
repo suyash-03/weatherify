@@ -21,8 +21,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   Location location = new Location();
-
   LocationData _locationData;
+
+
   @override
   void initState() {
     // TODO: implement initState
@@ -79,19 +80,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
                     }
                 )
-
-
-
-
-
-                
-                
               ],
             ),
           ),
           Expanded(
             child: Container(
-              color: Colors.blueAccent,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30)),
+                color: Colors.blueAccent,
+              ),
+
 
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,

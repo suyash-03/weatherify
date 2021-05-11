@@ -12,7 +12,6 @@ import 'dart:convert';
   bool _serviceEnabled;
   PermissionStatus _permissionGranted;
   LocationData _locationData;
-
   double newLat;
   double newLong;
 
@@ -36,19 +35,19 @@ import 'dart:convert';
     _locationData = await location.getLocation();
     print(_locationData);
   }
+Future<double> returnLatitude() async
+{
+  newLat = _locationData.latitude;
+  print(newLat);
+  return newLat.toDouble();
+}
+Future<double> returnLongitude() async
+{
+  newLong = _locationData.longitude;
+  print(newLong);
+  return newLong.toDouble();
+}
 
-  Future<double> returnLatitude() async
-  {
-    newLat = _locationData.latitude;
-    print(newLat);
-    return newLat.toDouble();
-  }
-  Future<double> returnLongitude() async
-  {
-    newLong = _locationData.longitude;
-    print(newLong);
-    return newLong.toDouble();
-  }
 
 
 

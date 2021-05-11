@@ -3,8 +3,9 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:weather/weather.dart';
-import 'package:weatherify/user_location.dart';
+import 'package:weatherify/HomeScreen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'user_location.dart';
 
 class DisplayWeather extends StatefulWidget {
   const DisplayWeather({Key key}) : super(key: key);
@@ -13,10 +14,13 @@ class DisplayWeather extends StatefulWidget {
   _DisplayWeatherState createState() => _DisplayWeatherState();
 }
 
+
 class _DisplayWeatherState extends State<DisplayWeather> {
 
   WeatherFactory wf = new WeatherFactory("af9b20f8cd3f81c020611328b534f316");
   double temperature,tempMin,tempMax;
+
+
 
 
   @override
@@ -25,6 +29,7 @@ class _DisplayWeatherState extends State<DisplayWeather> {
     super.initState();
     getTemp();
   }
+
   Future<double> getTemp() async{
     Weather w = await wf.currentWeatherByLocation(newLat, newLong);
     temperature = double.parse((w.temperature.celsius).toStringAsFixed(2));
@@ -68,7 +73,9 @@ class _DisplayWeatherState extends State<DisplayWeather> {
                 children: <Widget>[
                   Container(child: SizedBox(width: MediaQuery.of(context).size.width, height: 0,)),
                   Container(
-                    color: Colors.blueAccent,
+                      decoration: BoxDecoration(
+                        color: Colors.blueAccent,
+                      ),
                     height: MediaQuery.of(context).size.height/2,
                       child: Center(
                           child: Text("$temperature ° C",style: TextStyle(
@@ -79,9 +86,17 @@ class _DisplayWeatherState extends State<DisplayWeather> {
                       )
                   ),
                   SizedBox(height:  20),
-                  Text("Minimum Temperature: $tempMin" ),
+                  Text("Maximum Temperature: $tempMax",style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+
+                  ), ),
                   SizedBox(height:  20),
-                  Text("Maximum Temperature: $tempMax" ),
+                  Text("Minimum Temperature: $tempMin" ,style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+
+                  ),),
                   
                 ],
               ),
