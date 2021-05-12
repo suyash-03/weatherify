@@ -1,6 +1,6 @@
 # weatherify
 
-A new Flutter project.
+The Weather App for dummies
 
 ## Getting Started
 
