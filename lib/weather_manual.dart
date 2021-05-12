@@ -114,8 +114,8 @@ class WeatherManual extends StatelessWidget {
                           fontFamily: "Fjalla"
 
                       ),),
-                      SizedBox(height: 50,),
-                      Text("$cityName")
+                      SizedBox(height: 180,),
+                      Text("Showing Weather Details of $cityName")
 
                     ],
                   ),

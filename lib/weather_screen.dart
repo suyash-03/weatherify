@@ -123,8 +123,8 @@ class _DisplayWeatherState extends State<DisplayWeather> {
                       fontFamily: "Fjalla"
 
                   ),),
-                  SizedBox(height: 50,),
-                  Text("$latD" + "," + "$longD")
+                  SizedBox(height: 180,),
+                  Text("Latitude: $latD " + "," + " Longitude: $longD")
                   
                 ],
               ),
