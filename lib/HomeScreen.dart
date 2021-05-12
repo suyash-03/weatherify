@@ -104,16 +104,17 @@ class HomeScreen extends StatefulWidget {
                       },),
                     ),
                   ),
-                  SizedBox(height: 50,),
+                  SizedBox(height: 20,),
 
                   AnimatedHoverButton(title: "Search by City",
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
                     onTap: () {
                     if(_formkey.currentState.validate()){
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => WeatherManual(cityName:cityName)));
                     }}
                     , titleSize: 20,),
-                  SizedBox(height: 20,),
+                  SizedBox(height: 100,),
                   AnimatedHoverButton(
                     title: "Get Location Automatically", onTap: ()
                   {
