@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_button/flutter_button.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:weatherify/locationDetails.dart';
 import 'weather_screen.dart';
 import 'manual_location.dart';
@@ -15,6 +16,7 @@ class HomeScreen extends StatefulWidget {
   class _HomeScreenState extends State<HomeScreen> {
   String  cityName ="";
   LocationDetails _locationDetails =LocationDetails();
+  final _formkey = GlobalKey<FormState>();
 
 
   @override
@@ -67,32 +69,50 @@ class HomeScreen extends StatefulWidget {
                   SizedBox(height: MediaQuery.of(context).size.height/25,),
                   Container(
                     width: MediaQuery.of(context).size.width/1.2,
-                    child: TextField(decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.white,
-                          ),
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        hintText: 'Enter City Name',
-                      hintStyle: TextStyle(
-                        color: Colors.white
-                      ),
+                    child: Form(
+                      key: _formkey,
+                      child: TextFormField(
+                        validator: (val) => val.isEmpty? 'Please Enter a City Name':null,
+                        decoration: InputDecoration(
+                        filled: true,
+                          fillColor: Colors.white,
+                          helperText: 'Enter City Name here and Click on the Button below',
+                          prefixIcon: Icon(Icons.location_city_rounded),
 
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.white,
+                            ),
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.greenAccent,
+                            ),
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          hintText: 'Enter City Name',
+                        hintStyle: TextStyle(
+                          color: Colors.white
+                        ),
+
+                      ),
+                      onChanged: (String str){
+                        setState(() {
+                          cityName = str;
+                        });
+                      },),
                     ),
-                    onChanged: (String str){
-                      setState(() {
-                        cityName = str;
-                      });
-                    },),
                   ),
                   SizedBox(height: 50,),
 
                   AnimatedHoverButton(title: "Search by City",
                     onTap: () {
+                    if(_formkey.currentState.validate()){
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => WeatherManual(cityName:cityName)));
-                    }, titleSize: 20,),
+                    }}
+                    , titleSize: 20,),
                   SizedBox(height: 20,),
                   AnimatedHoverButton(
                     title: "Get Location Automatically", onTap: ()
