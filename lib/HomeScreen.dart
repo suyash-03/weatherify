@@ -114,7 +114,7 @@ class HomeScreen extends StatefulWidget {
                           MaterialPageRoute(builder: (context) => WeatherManual(cityName:cityName)));
                     }}
                     , titleSize: 20,),
-                  SizedBox(height: 100,),
+                  SizedBox(height: MediaQuery.of(context).size.height/8,),
                   AnimatedHoverButton(
                     title: "Get Location Automatically", onTap: ()
                   {

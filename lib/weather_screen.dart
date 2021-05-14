@@ -123,7 +123,7 @@ class _DisplayWeatherState extends State<DisplayWeather> {
                       fontFamily: "Fjalla"
 
                   ),),
-                  SizedBox(height: 180,),
+                  SizedBox(height: MediaQuery.of(context).size.height/5,),
                   Text("Latitude: $latD " + "," + " Longitude: $longD")
                   
                 ],
